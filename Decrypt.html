@@ -2,24 +2,88 @@
 <html>
 <head>
   <title>File Decryption</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    input[type="file"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #0074D9;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #decryptedContent {
+      display: none;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    @media screen and (min-width: 768px) {
+      h1 {
+        font-size: 32px;
+      }
+
+      input[type="file"], input[type="password"] {
+        width: 50%;
+      }
+
+      button {
+        padding: 15px 30px;
+      }
+    }
+  </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
 </head>
 <body>
   <h1>File Decryption</h1>
 
   <input type="file" id="fileInput" accept=".enc">
-  <br><br>
+  <br>
   <input type="password" id="secretKey" placeholder="Enter Secret Key">
-  <br><br>
+  <br>
   <button onclick="decryptFile()">Decrypt</button>
   
-  <div id="decryptedContent" style="display: none;">
+  <div id="decryptedContent">
     <h2>Decrypted Content</h2>
     <button onclick="toggleDecryption()">Show/Hide</button>
-    <br><br>
+    <br>
     <textarea id="decryptedText" rows="10" cols="40"></textarea>
     <br>
-    <a id="downloadLink" style="display: none;" download="decrypted.txt"><button onclick="downloadDecryptedFile()">Download Decrypted File</button></a>
+    <a id="downloadLink" style="display: none;" download="decrypted.txt">
+      <button onclick="downloadDecryptedFile()">Download Decrypted File</button>
+    </a>
   </div>
 
   <script>
