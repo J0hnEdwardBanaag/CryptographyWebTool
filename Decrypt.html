@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File Encryption and Decryption</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+</head>
+<body>
+  <h1>File Encryption and Decryption</h1>
+
+  <input type="file" id="fileInput" accept=".enc">
+  <br><br>
+  <input type="text" id="secretKey" placeholder="Enter Secret Key">
+  <br><br>
+  <button onclick="decryptFile()">Decrypt</button>
+  
+  <div id="decryptedContent" style="display: none;">
+    <h2>Decrypted Content</h2>
+    <button onclick="toggleDecryption()">Show/Hide</button>
+    <br><br>
+    <textarea id="decryptedText" rows="10" cols="40"></textarea>
+    <br>
+    <a id="downloadLink" style="display: none;" download="decrypted.txt"><button onclick="downloadDecryptedFile()">Download Decrypted File</button></a>
+  </div>
+
+  <script>
+    function decryptFile() {
+      const fileInput = document.getElementById("fileInput");
+      const secretKeyInput = document.getElementById("secretKey");
+      const decryptedContentDiv = document.getElementById("decryptedContent");
+      const decryptedText = document.getElementById("decryptedText");
+      const downloadLink = document.getElementById("downloadLink");
+
+      const file = fileInput.files[0];
+      const secretKey = secretKeyInput.value;
+
+      if (!file) {
+        alert("Please select an encrypted file to decrypt.");
+        return;
+      }
+
+      if (!secretKey) {
+        alert("Please enter the secret key.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const encryptedContent = e.target.result;
+        try {
+          const decryptedContent = CryptoJS.AES.decrypt(encryptedContent, secretKey).toString(CryptoJS.enc.Utf8);
+          if (decryptedContent) {
+            decryptedText.value = decryptedContent;
+            decryptedContentDiv.style.display = "block";
+            downloadLink.style.display = "block";
+          } else {
+            alert("Decryption failed. Please check the secret key.");
+          }
+        } catch (error) {
+          alert("Decryption error: " + error.message);
+        }
+      };
+
+      reader.readAsText(file);
+    }
+
+    function toggleDecryption() {
+      const decryptedText = document.getElementById("decryptedText");
+      const downloadLink = document.getElementById("downloadLink");
+
+      if (decryptedText.style.display === "none") {
+        decryptedText.style.display = "block";
+        downloadLink.style.display = "block";
+      } else {
+        decryptedText.style.display = "none";
+        downloadLink.style.display = "none";
+      }
+    }
+
+    function downloadDecryptedFile() {
+      const decryptedText = document.getElementById("decryptedText").value;
+      const downloadLink = document.getElementById("downloadLink");
+      const blob = new Blob([decryptedText], { type: "text/plain" });
+      downloadLink.href = URL.createObjectURL(blob);
+    }
+  </script>
+</body>
+</html>
