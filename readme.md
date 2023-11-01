@@ -167,3 +167,9 @@ In this updated code:
 2. After entering the secret key and clicking "Decrypt," the program attempts to decrypt the file's content.
 3. The decrypted content can be shown or hidden using the "Show/Hide" button.
 4. There's a "Download Decrypted File" button that allows the user to download the decrypted content as a text file.
+
+
+Link:
+https://j0hnedwardbanaag.github.io/CryptographyWebTool/Decrypt.html
+https://j0hnedwardbanaag.github.io/CryptographyWebTool/Encrypt.html
+Sample
